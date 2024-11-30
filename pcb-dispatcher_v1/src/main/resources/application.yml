@@ -1,0 +1,98 @@
+# Общие настройки для всех профилей
+spring:
+  application:
+    name: pcb-dispatcher
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  main:
+    banner-mode: off
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Europe/Moscow
+
+server:
+  port: 8080
+
+# Настройки логирования общие
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/pcb-dispatcher.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 10
+
+---
+# Dev профиль
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:pcbdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        '[show_sql]': false
+        '[format_sql]': false
+        '[use_sql_comments]': false
+
+logging:
+  level:
+    '[org.hibernate.SQL]': INFO
+    '[org.hibernate.type.descriptor.sql.BasicBinder]': INFO
+    '[com.yadro.pcbdispatcher]': INFO
+
+---
+# Test профиль
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: false
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    '[com.yadro.pcbdispatcher]': WARN
+
+---
+# Prod профиль
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pcb_dispatcher
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  h2:
+    console:
+      enabled: false
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    '[com.yadro.pcbdispatcher]': INFO 
