@@ -50,8 +50,8 @@ PCB Dispatcher API — это RESTful API для управления перем
 1. **Клонируйте репозиторий:**
 
    ```bash
-   git clone https://github.com/yourusername/pcb-dispatcher.git
-   cd pcb-dispatcher
+   git clone https://github.com/2duserAR/pcb_dispatcher_v1.git
+   cd pcb_dispatcher_v1
    ```
 
 2. **Настройка базы данных:**
@@ -90,12 +90,6 @@ PCB Dispatcher API — это RESTful API для управления перем
 
    Доступные эндпоинты:
    1. `POST /pcbs` - создание новой платы
-      ```json
-      {
-        "serialNumber": "TEST001"
-      }
-      ```
-
    2. `GET /pcbs` - получение списка всех плат
    3. `POST /pcbs/{id}/next` - перемещение платы на следующий этап
    4. `POST /pcbs/{id}/repair` - отправка платы в ремонт
